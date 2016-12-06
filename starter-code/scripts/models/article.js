@@ -46,6 +46,10 @@ Article.fetchAll = function() {
     /* When our data is already in localStorage:
     1. We can process and load it,
     2. Then we can render the index page.  */
+    var blogArts = JSON.parse(localStorage.getItem('blogArticles'));
+    Article.loadAll(blogArts);
+    console.log('data already in localStorage');
+    articleView.renderIndexPage();
   } else {
     /* Without our localStorage in memory, we need to:
     1. Retrieve our JSON file with $.getJSON
@@ -55,6 +59,7 @@ Article.fetchAll = function() {
     $.getJSON('data/blogArticles.json', function(data){
       Article.loadAll(data);
       localStorage.setItem('blogArticles',JSON.stringify(data));
+      console.log('data not in localStorage yet');
       articleView.renderIndexPage();
     });
   }
